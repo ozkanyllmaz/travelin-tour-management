@@ -1,0 +1,12 @@
+﻿@model List<ResultBookingDto>
+
+<div onclick="openPendingBookingsModal()" class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 group hover:border-primary-container transition-all duration-300 cursor-pointer">
+    <div class="flex items-center justify-between mb-6">
+        <div class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+            <span class="material-symbols-outlined">pending_actions</span>
+        </div>
+        <span class="text-xs font-bold text-tertiary bg-tertiary-container/30 px-3 py-1 rounded-full uppercase tracking-wider">Acil</span>
+    </div>
+    <p class="text-label-md text-on-surface-variant font-medium uppercase tracking-widest mb-1">Bekleyen Rezervasyonlar</p>
+    <h3 class="text-4xl font-black text-on-surface">@Model.Count</h3>
+</div>

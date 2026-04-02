@@ -1,0 +1,85 @@
+﻿@model GetTourByIdDto
+
+
+<style>
+    .booking-card {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        background-color: #ffffff;
+    }
+
+    .booking-info-panel {
+        background-color: #fafbfd; /* Sol tarafın çok hafif gri/mavi arka planı */
+    }
+
+    .custom-input {
+        border-radius: 10px;
+        padding: 14px 18px;
+        border: 1px solid #eaedf1;
+        background-color: #ffffff;
+        font-size: 15px;
+        color: #495057;
+    }
+
+        .custom-input:focus {
+            border-color: #28a745;
+            box-shadow: none;
+        }
+
+    .custom-btn {
+        border-radius: 10px;
+        background-color: #22c55e;
+        border: none;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+        .custom-btn:hover {
+            background-color: #1ea951;
+        }
+
+    .feature-icon {
+        color: #22c55e;
+        font-size: 20px;
+        width: 30px;
+    }
+    /* Yolcu ikonunu inputun içine yerleştirmek için */
+    .icon-input-wrapper {
+        position: relative;
+    }
+
+        .icon-input-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+        }
+
+        .icon-input-wrapper input {
+            padding-left: 45px;
+        }
+</style>
+
+
+<div class="col-md-5 p-4 p-md-5 booking-info-panel d-flex flex-column justify-content-center">
+    <h2 class="font-weight-bold mb-3" style="color: #2b3445;">@Model.Title</h2>
+
+    <p class="text-muted mb-5" style="line-height: 1.7;">
+        @Model.Description
+    </p>
+
+    <ul class="list-unstyled mt-auto">
+        <li class="mb-4 d-flex align-items-center text-muted font-weight-bold">
+            <i class="fa fa-map-marker-alt feature-icon" style="margin-right:10px;"></i> @Model.Country, @Model.City
+        </li>
+        <li class="mb-4 d-flex align-items-center text-muted font-weight-bold">
+            <i class="fa fa-clock feature-icon" style="margin-right:10px;"></i> @Model.DayNight
+        </li>
+        <li class="d-flex align-items-center text-muted font-weight-bold">
+            <i class="fa fa-wallet feature-icon" style="margin-right:10px;"></i> @Model.Price
+        </li>
+    </ul>
+</div>

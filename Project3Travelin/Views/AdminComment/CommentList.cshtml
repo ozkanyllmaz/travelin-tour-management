@@ -1,0 +1,125 @@
+﻿@model List<ResultCommentDto>
+
+@{
+    ViewData["Title"] = "CommentList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="p-10 max-w-7xl mx-auto">
+    <div class="mb-12 flex justify-between items-end">
+        <div>
+            <h2 class="text-[2.75rem] font-bold tracking-[-0.02em] text-gray-900 leading-tight">Kullanıcı Yorumları</h2>
+            <p class="text-lg text-gray-500 mt-2 font-body max-w-2xl">Müşteri geri bildirimlerini inceleyin, onaylayın veya platformdan kaldırın.</p>
+        </div>
+        <div class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined">forum</span>
+            Toplam @Model.Count Yorum
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+        
+        <div class="space-y-6">
+            @foreach (var item in Model)
+            {
+                <div class="flex flex-col md:flex-row gap-6 p-5 hover:bg-gray-50 rounded-xl transition-all border border-gray-100 hover:border-indigo-100 hover:shadow-md relative group">
+                    
+                    <div class="shrink-0 flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-700 flex items-center justify-center text-xl font-black shadow-inner">
+                            @(!string.IsNullOrEmpty(item.Name) ? item.Name.Substring(0, 1).ToUpper() : "M")
+                        </div>
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        
+                        <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-900 leading-none mb-1">@item.Headline</h4>
+                                <p class="text-sm text-gray-500 font-medium">
+                                    @item.Name <span class="mx-1">•</span> 
+                                    <a href="mailto:@item.Email" class="hover:text-indigo-600 transition-colors">@item.Email</a>
+                                    <span class="mx-1">•</span> 
+                                    @item.CommentDate.ToString("dd MMM yyyy, HH:mm")
+                                </p>
+                            </div>
+
+                            <div class="flex items-center text-yellow-400 bg-yellow-50 px-2 py-1 rounded-lg border border-yellow-100">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= item.Score)
+                                    {
+                                        <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="material-symbols-outlined text-base text-yellow-200" style="font-variation-settings: 'FILL' 0;">star</span>
+                                    }
+                                }
+                                <span class="text-yellow-700 font-bold text-sm ml-1">@item.Score.0</span>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-700 text-base leading-relaxed mb-4">
+                            "@item.CommentDetail"
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                            <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">person_check</span> Rehber: @item.Guide/5
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">map</span> Program: @item.Program/5
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">payments</span> Fiyat/Perf: @item.ValueForMoney/5
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">room_service</span> Hizmet: @item.Service/5
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">event_available</span> Organizasyon: @item.Organization/5
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center shrink-0 gap-4 border-l border-gray-100 pl-6 ml-2">
+                        
+                        @if (item.IsStatus)
+                        {
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">verified</span> Yayında
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">hourglass_empty</span> Yayında Değil
+                            </span>
+                        }
+
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="ChangeCommentStatus('@item.CommentId')" class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors @(item.IsStatus ? "bg-amber-50 text-amber-600 hover:bg-amber-100" : "bg-green-50 text-green-600 hover:bg-green-100")" title="@(item.IsStatus ? "Yayından Kaldır" : "Onayla ve Yayınla")">
+                                <span class="material-symbols-outlined text-[20px]">
+                                    @(item.IsStatus ? "visibility_off" : "visibility") 
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+        
+    </div>
+</section>
+
+
+<script>
+    function ChangeCommentStatus(commentId){
+        if(confirm("Bu yorumun yayın durumunu değiştirmek istediğinize emin misiniz?")){
+            window.location.href = `/AdminComment/ChangeCommentStatus?id=${commentId}`;
+        }
+    }
+</script>
+

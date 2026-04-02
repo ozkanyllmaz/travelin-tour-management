@@ -1,0 +1,126 @@
+﻿@model Project3Travelin.Dtos.CommentDtos.CreateCommentDto
+
+
+<!-- blog review -->
+<div id="single-add-review" class="single-add-review">
+    <h4>Yorum Yap</h4>
+    <form method="post" action="/Comment/CreateComment/" id="commentForm">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="TourId" value="@Model.TourId" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-2">
+                    <input type="text" asp-for="Name" placeholder="İsim">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-2">
+                    <input type="email" asp-for="Email" placeholder="Mail">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group mb-2">
+                    <input type="text" asp-for="Headline" placeholder="Başlık">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group mb-2">
+                    <textarea asp-for="CommentDetail" placeholder="Yorum"></textarea>
+                </div>
+            </div>
+
+            <!-- Rating Section -->
+            <div class="col-md-6">
+                <div class="rating-group">
+                    <span class="rating-label">Rehber</span>
+                    <div class="star-rating">
+                        <input id="clean-5" asp-for="@Model.Guide" type="radio" value="5" /><label for="clean-5"></label>
+                        <input id="clean-4" asp-for="@Model.Guide" type="radio" value="4" /><label for="clean-4"></label>
+                        <input id="clean-3" asp-for="@Model.Guide" type="radio" value="3" /><label for="clean-3"></label>
+                        <input id="clean-2" asp-for="@Model.Guide" type="radio" value="2" /><label for="clean-2"></label>
+                        <input id="clean-1" asp-for="@Model.Guide" type="radio" value="1" /><label for="clean-1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rating-group">
+                    <span class="rating-label">Fiyat/Performans</span>
+                    <div class="star-rating">
+                        <input id="fac-5" asp-for="@Model.ValueForMoney" type="radio" value="5" /><label for="fac-5"></label>
+                        <input id="fac-4" asp-for="@Model.ValueForMoney" type="radio" value="4" /><label for="fac-4"></label>
+                        <input id="fac-3" asp-for="@Model.ValueForMoney" type="radio" value="3" /><label for="fac-3"></label>
+                        <input id="fac-2" asp-for="@Model.ValueForMoney" type="radio" value="2" /><label for="fac-2"></label>
+                        <input id="fac-1" asp-for="@Model.ValueForMoney" type="radio" value="1" /><label for="fac-1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rating-group">
+                    <span class="rating-label">İçerik/Rota</span>
+                    <div class="star-rating">
+                        <input id="val-5" asp-for="@Model.Program" type="radio" value="5" /><label for="val-5"></label>
+                        <input id="val-4" asp-for="@Model.Program" type="radio" value="4" /><label for="val-4"></label>
+                        <input id="val-3" asp-for="@Model.Program" type="radio" value="3" /><label for="val-3"></label>
+                        <input id="val-2" asp-for="@Model.Program" type="radio" value="2" /><label for="val-2"></label>
+                        <input id="val-1" asp-for="@Model.Program" type="radio" value="1" /><label for="val-1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rating-group">
+                    <span class="rating-label">Hizmet</span>
+                    <div class="star-rating">
+                        <input id="ser-5" asp-for="@Model.Service" type="radio" value="5" /><label for="ser-5"></label>
+                        <input id="ser-4" asp-for="@Model.Service" type="radio" value="4" /><label for="ser-4"></label>
+                        <input id="ser-3" asp-for="@Model.Service" type="radio" value="3" /><label for="ser-3"></label>
+                        <input id="ser-2" asp-for="@Model.Service" type="radio" value="2" /><label for="ser-2"></label>
+                        <input id="ser-1" asp-for="@Model.Service" type="radio" value="1" /><label for="ser-1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rating-group">
+                    <span class="rating-label">Organizasyon</span>
+                    <div class="star-rating">
+                        <input id="loc-5" asp-for="@Model.Organization" type="radio" value="5" /><label for="loc-5"></label>
+                        <input id="loc-4" asp-for="@Model.Organization" type="radio" value="4" /><label for="loc-4"></label>
+                        <input id="loc-3" asp-for="@Model.Organization" type="radio" value="3" /><label for="loc-3"></label>
+                        <input id="loc-2" asp-for="@Model.Organization" type="radio" value="2" /><label for="loc-2"></label>
+                        <input id="loc-1" asp-for="@Model.Organization" type="radio" value="1" /><label for="loc-1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <button type="submit" class="nir-btn">Gönder</button>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</div>
+
+
+<script>
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const form = this;
+        const formData = new FormData(form);
+
+        fetch('/Comment/CreateComment/', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirect veya sayfayı yenile
+                window.location.reload();
+            } else {
+                console.error('Hata:', response.status);
+            }
+        })
+        .catch(error => console.error('İstek başarısız:', error));
+    });
+</script>

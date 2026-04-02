@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "TourList";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    int currentPage = int.Parse(Context.Request.Query["page"].FirstOrDefault() ?? "1");
+}
+
+
+@await Component.InvokeAsync("_TourListComponentPartial", new { page = currentPage })
+
+
+
+    

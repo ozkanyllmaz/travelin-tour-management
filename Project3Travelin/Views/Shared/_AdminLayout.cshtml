@@ -1,0 +1,165 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-dim": "#dadada",
+                        "surface": "#f9f9f9",
+                        "on-primary-fixed-variant": "#005236",
+                        "on-secondary-container": "#3c6c54",
+                        "secondary-fixed": "#baeed1",
+                        "primary-fixed-dim": "#4edea3",
+                        "on-tertiary-container": "#711419",
+                        "surface-variant": "#e2e2e2",
+                        "on-background": "#1a1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#002113",
+                        "on-tertiary-fixed-variant": "#842225",
+                        "on-secondary-fixed": "#002113",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#10b981",
+                        "on-primary-container": "#00422b",
+                        "inverse-primary": "#4edea3",
+                        "secondary": "#376850",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#bbcabf",
+                        "surface-container": "#eeeeee",
+                        "secondary-fixed-dim": "#9ed2b5",
+                        "on-surface-variant": "#3c4a42",
+                        "primary": "#006c49",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb3af",
+                        "on-surface": "#1a1c1c",
+                        "surface-tint": "#006c49",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-container": "#fc7c78",
+                        "surface-container-highest": "#e2e2e2",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-fixed-variant": "#1e4f3a",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#6ffbbe",
+                        "secondary-container": "#b7ebce",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9f9",
+                        "tertiary-fixed": "#ffdad7"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-fixed">
+    <aside class="flex flex-col pt-8 space-y-2 fixed left-0 top-0 h-full border-r border-[#bbcabf]/20 bg-[#f3f3f3] dark:bg-slate-900 w-72 z-50">
+        <div class="px-8 mb-10">
+            <h1 class="text-lg font-black tracking-tighter text-[#1a1c1c] dark:text-slate-50">Travelin</h1>
+            <p class="text-xs text-on-surface-variant/60 font-medium uppercase tracking-widest mt-1">Yönetim Paneli</p>
+        </div>
+        @{
+            // Mevcut sayfanın URL adresini alıyoruz (Örn: "/AdminTour/TourList")
+            var currentUrl = Context.Request.Path.ToString();
+
+            // URL'e bakıp Aktif veya Pasif Tailwind sınıflarını dönen pratik bir C# fonksiyonu
+            string GetNavClass(string targetUrl)
+            {
+                if (currentUrl.Contains(targetUrl))
+                {
+                    // AKTİF İSE: Yeşil arka plan, yeşil yazı ve sol çizgi
+                    return "bg-[#6ffbbe]/30 text-[#006c49] border-l-[3px] border-[#006c49]";
+                }
+                // PASİF İSE: Gri hover efekti
+                return "text-[#3c4a42] dark:text-slate-400 hover:bg-[#e8e8e8] dark:hover:bg-slate-800 border-l-[3px] border-transparent";
+            }
+
+            // İkonun içinin dolu (1) veya boş (0) olmasını belirleyen fonksiyon
+            string GetIconFill(string targetUrl)
+            {
+                return currentUrl.Contains(targetUrl) ? "1" : "0";
+            }
+        }
+
+        <nav class="flex-1 px-4 space-y-1">
+
+            <a class="flex items-center space-x-3 w-full px-6 py-3 font-medium transition-all duration-200 @GetNavClass("/AdminTour")" href="/AdminTour/TourList">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' @GetIconFill("/AdminTour");">explore</span>
+                <span class="font-['Inter'] text-sm">Turlar</span>
+            </a>
+
+            <a class="flex items-center space-x-3 w-full px-6 py-3 font-medium transition-all duration-200 @GetNavClass("/AdminComment")" href="/AdminComment/CommentList">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' @GetIconFill("/AdminComment");">forum</span>
+                <span class="font-['Inter'] text-sm">Yorumlar</span>
+            </a>
+
+            <a class="flex items-center space-x-3 w-full px-6 py-3 font-medium transition-all duration-200 @GetNavClass("/AdminBooking")" href="/AdminBooking/BookingList">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' @GetIconFill("/Booking");">book_online</span>
+                <span class="font-['Inter'] text-sm">Rezervasyonlar</span>
+            </a>
+
+        </nav>
+        <div class="p-6 mt-auto">
+            <div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl">
+                <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden">
+                    <img alt="Admin User" class="w-full h-full object-cover" data-alt="professional headshot of a curator in a clean modern office with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAquffbRiFipakQld7j7EbEzRjybeMzMXOdz-XBhQE6cCb3OeUXZ5ZLYIWDVaBbCk9Cs2XFKgSP8NfWggziKcpxfGXUINg5Uy2rQ9K-p0u1br-U2sQRyziz34Z35ZXcNbWl5ZlMkKOiZLrClGytTWX5y7_nn9WvhsSlFVg2gbqLYNF5MISjEuIO9klFAQtdxusFez-4ejURgOJ2q88vlzpg3993YciRvwrV3TfhzSyclzBmFI8X_baopkRnGx0vcy8i5plfWbMiTdQ" />
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-on-surface">Admin</p>
+                    <p class="text-[10px] text-on-surface-variant font-semibold uppercase tracking-tighter">Sistem Yöneticisi</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <main class="ml-72 min-h-screen">
+        <header class="flex justify-between items-center h-16 px-8 w-full border-b border-[#bbcabf]/20 bg-[#ffffff] dark:bg-slate-950 sticky top-0 z-40">
+            <div class="flex items-center gap-4">
+                <span class="text-xl font-bold text-[#1a1c1c] dark:text-slate-100 font-['Inter'] tracking-tight">Yönetim Paneli</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="w-10 h-10 flex items-center justify-center text-[#3c4a42] hover:bg-[#f3f3f3] dark:hover:bg-slate-800 transition-colors rounded-full cursor-pointer active:opacity-70">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button class="w-10 h-10 flex items-center justify-center text-[#3c4a42] hover:bg-[#f3f3f3] dark:hover:bg-slate-800 transition-colors rounded-full cursor-pointer active:opacity-70">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
+            </div>
+        </header>
+        @RenderBody()
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿@model GetTourByIdDto
+
+@{
+    ViewData["Title"] = "UpdateTour";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="max-w-5xl mx-auto p-8">
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-6 border-b border-gray-100 bg-gray-50">
+            <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <span class="material-symbols-outlined text-blue-600">edit_square</span>
+                Turu Güncelle: @Model.Title
+            </h3>
+        </div>
+
+        <form action="/AdminTour/UpdateTour" method="post" class="p-6">
+            <input type="hidden" name="TourId" value="@Model.TourId" />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tur Adı</label>
+                    <input type="text" name="Title" value="@Model.Title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Ülke</label>
+                    <input type="text" name="Country" value="@Model.Country" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Şehir</label>
+                    <input type="text" name="City" value="@Model.City" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Fiyat (₺)</label>
+                    <input type="text" name="Price" value="@Model.Price.ToString().Replace(",", ".")" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Kontenjan</label>
+                    <input type="number" name="Capacity" value="@Model.Capacity" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tur Açıklaması</label>
+                    <textarea name="Description" value="@Model.Description" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">@Model.Description</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tur Resmi</label>
+                    <input type="text" name="ImageUrl" value="@Model.ImageUrl" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+
+                </div>
+            </div>
+
+            <h4 class="font-bold text-lg text-blue-700 mb-4 border-b pb-2">Tur Programı (Günler)</h4>
+            <div class="space-y-4 mb-8" id="programContainer">
+
+                @if (Model.TourPrograms != null)
+                {
+                    @for (int i = 0; i < Model.TourPrograms.Count; i++)
+                    {
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                            <span class="font-bold text-sm bg-gray-200 px-2 py-1 rounded">@Model.TourPrograms[i].DayNumber. Gün</span>
+
+                            <input type="hidden" name="TourPrograms[@i].DayNumber" value="@Model.TourPrograms[i].DayNumber" />
+
+                            <div class="mt-3 space-y-3">
+                                <input type="text" name="TourPrograms[@i].Title" value="@Model.TourPrograms[i].Title" class="w-full px-3 py-2 border rounded-lg">
+                                <textarea name="TourPrograms[@i].Description" rows="2" class="w-full px-3 py-2 border rounded-lg">@Model.TourPrograms[i].Description</textarea>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="flex justify-end gap-3 pt-5 border-t">
+                <a href="/AdminTour/TourList" class="px-6 py-2 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300">Vazgeç</a>
+                <button type="submit" class="px-5 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2 shadow-md">
+                    <span class="material-symbols-outlined text-sm">save</span>
+                    Değişiklikleri Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

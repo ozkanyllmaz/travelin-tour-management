@@ -1,0 +1,154 @@
+﻿@using Project3Travelin.Models.Enums
+@model List<ResultAllBookingDto>
+
+@{
+    ViewData["Title"] = "BookingList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="p-10 max-w-7xl mx-auto">
+    <div class="mb-12 flex justify-between items-end">
+        <div>
+            <h2 class="text-[2.75rem] font-bold tracking-[-0.02em] text-gray-900 leading-tight">Rezervasyon Yönetimi</h2>
+            <p class="text-lg text-gray-500 mt-2 font-body max-w-2xl">Sisteme düşen tüm tur kayıtlarını buradan takip edebilir ve filtreleyebilirsiniz.</p>
+        </div>
+        <div class="bg-indigo-50 text-indigo-700 px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm border border-indigo-100">
+            <span class="material-symbols-outlined">book_online</span>
+            Toplam @(Model?.Count ?? 0) Rezervasyon
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+            <h3 class="font-bold text-gray-700 text-lg">Rezervasyon Listesi</h3>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
+                <input type="text" placeholder="Müşteri ara..." class="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all w-64 bg-white">
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-white text-gray-500 text-xs uppercase tracking-wider border-b border-gray-200">
+                        <th class="p-5 font-bold">Müşteri</th>
+                        <th class="p-5 font-bold">İletişim</th>
+                        <th class="p-5 font-bold">Tur Bilgisi</th>
+                        <th class="p-5 font-bold text-center">Kişi</th>
+                        <th class="p-5 font-bold">Kayıt Tarihi</th>
+                        <th class="p-5 font-bold text-center">Durum</th>
+                        <th class="p-5 font-bold text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm divide-y divide-gray-100">
+
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50 transition-colors group">
+
+                                <td class="p-5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0">
+                                            @(!string.IsNullOrEmpty(item.FirstName) ? item.FirstName.Substring(0, 1).ToUpper() : "M")
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">@item.FirstName @item.LastName</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="p-5">
+                                    <div class="flex flex-col gap-1">
+                                        <a href="mailto:@item.Email" class="text-gray-500 hover:text-indigo-600 flex items-center gap-1.5 transition-colors">
+                                            <span class="material-symbols-outlined text-[16px]">mail</span> @item.Email
+                                        </a>
+                                        <a href="tel:@item.Phone" class="text-gray-500 hover:text-indigo-600 flex items-center gap-1.5 transition-colors">
+                                            <span class="material-symbols-outlined text-[16px]">call</span> @item.Phone
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="p-5">
+                                    <span class="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg font-medium text-xs border border-gray-200">
+                                        <span class="material-symbols-outlined text-[14px]">map</span>
+                                        @(item.TourTitle)
+                                    </span>
+                                </td>
+
+                                <td class="p-5 text-center">
+                                    <span class="font-black text-gray-700 bg-gray-100 w-8 h-8 flex items-center justify-center rounded-full mx-auto">
+                                        @item.PassengerCount
+                                    </span>
+                                </td>
+
+                                <td class="p-5 text-gray-500 font-medium">
+                                    @item.BookingDate.ToString("dd MMM yyyy") <br>
+                                    <span class="text-xs text-gray-400">@item.BookingDate.ToString("HH:mm")</span>
+                                </td>
+
+                                <td class="p-5 text-center">
+                                    @{
+                                        string badgeClass = "";
+                                        string iconName = "";
+                                        string statusText = item.BookingStatus.ToString();
+
+                                        // Enum değerlerine göre Tailwind renklerini belirliyoruz
+                                        // (Kendi Enum isimlerine göre case'leri güncelleyebilirsin)
+                                        switch (item.BookingStatus.ToString().ToLower())
+                                        {
+                                            case "onaylandı":
+                                                badgeClass = "bg-green-100 text-green-700 border-green-200";
+                                                iconName = "check_circle";
+                                                break;
+                                            case "bekliyor":
+                                                badgeClass = "bg-amber-100 text-amber-700 border-amber-200";
+                                                iconName = "hourglass_empty";
+                                                break;
+                                            case "reddedildi":
+                                                badgeClass = "bg-red-100 text-red-700 border-red-200";
+                                                iconName = "cancel";
+                                                break;
+                                            default:
+                                                badgeClass = "bg-gray-100 text-gray-700 border-gray-200";
+                                                iconName = "info";
+                                                break;
+                                        }
+                                    }
+                                    <span class="inline-flex items-center gap-1 @badgeClass border px-3 py-1 rounded-full text-xs font-bold">
+                                        <span class="material-symbols-outlined text-[14px]">@iconName</span> @statusText
+                                    </span>
+                                </td>
+
+                                <td class="p-5 text-right">
+                                    <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button onclick="window.location.href=`/AdminBooking/ApproveBooking?id=${'@item.BookingId'}`" class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition-colors" title="Onayla">
+                                            <span class="material-symbols-outlined text-[18px]">check</span>
+                                        </button>
+                                        <button onclick="window.location.href=`/AdminBooking/RejectBooking?id=${'@item.BookingId'}`" class="w-8 h-8 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors" title="Reddet">
+                                            <span class="material-symbols-outlined text-[18px]">cancel</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="p-10 text-center text-gray-500">
+                                <span class="material-symbols-outlined text-4xl mb-2 text-gray-300">search_off</span>
+                                <p>Henüz sisteme kayıtlı bir rezervasyon bulunmuyor.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+

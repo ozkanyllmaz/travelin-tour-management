@@ -1,0 +1,96 @@
+﻿@model List<ResultCommentListByTourIdDto>
+
+<div id="single-comments" class="single-comments mb-4">
+    <h5 class="border-b pb-3 mb-4"> @Model.Count Adet Yorum </h5>
+
+    @foreach (var item in Model)
+    {
+        <div class="comment-card mb-4" style="border-left: 4px solid #17a2b8; background: #f8f9fa; padding: 24px; border-radius: 8px; position: relative;">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="d-flex gap-3">
+                    <!-- User Image -->
+                    <img src="/travelin/images/travel1.png" alt="@item.Name"
+                         style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+
+                    <!-- Name & Info -->
+                    <div>
+                        <h6 class="mb-1" style="font-weight: 600;">@item.Name</h6>
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="badge" style="background-color: #d4edda; color: #155724; font-weight: 500; font-size: 11px; padding: 4px 8px;">
+                                @item.Email
+                            </span>
+                            <span style="color: #999; font-size: 12px;">
+                                @item.CommentDate.ToString("MMM dd, yyyy")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stars (Sağ Üst) -->
+                <div class="rating" style="display: flex; gap: 2px;">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= item.Score)
+                        {
+                            <span class="fa fa-star" style="color: #ffc107; font-size: 16px;"></span>
+                        }
+                        else
+                        {
+                            <span class="fa fa-star" style="color: #ddd; font-size: 16px;"></span>
+                        }
+                    }
+                </div>
+            </div>
+
+            <!-- Title -->
+            <h5 class="mb-2" style="font-weight: 600; color: #212529; font-size: 18px;">
+                @item.Headline
+            </h5>
+
+            <!-- Comment Text -->
+            <p class="mb-3" style="color: #666; line-height: 1.7; font-size: 14px;">
+                @item.CommentDetail
+            </p>
+
+            <!-- Footer -->
+            <div class="d-flex justify-content-end gap-5 align-items-center border-top pt-3" style="border-color: #ddd;">
+                <div class="like-buttons" style="display:flex; gap:30px;">
+                    <a href="#" style="color: #28a745; text-decoration: none; font-size: 13px; font-weight: 500;">
+                        <i class="fa fa-thumbs-up"></i>
+                    </a>
+                    <a href="#" style="color: #666; text-decoration: none; font-size: 13px; font-weight: 500;">
+                        <i class="fa fa-thumbs-down"></i> 
+                    </a>
+                </div>
+
+                
+                
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .comment-card {
+        transition: all 0.3s ease;
+    }
+
+        .comment-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff !important;
+        }
+
+    .rating {
+        display: flex;
+        gap: 2px;
+    }
+
+    .badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+</style>
