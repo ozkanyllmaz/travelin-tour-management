@@ -11,8 +11,7 @@ wwwroot/** linguist-vendored
 
 *.js linguist-detectable=false
 
-# ViewComponent ve diðer Razor görünümlerini (HTML) çýkarýr
-*.cshtml linguist-detectable=false
+
 
 ###############################################################################
 # Set default behavior for command prompt diff.
