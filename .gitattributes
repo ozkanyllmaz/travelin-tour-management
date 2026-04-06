@@ -3,6 +3,13 @@
 ###############################################################################
 * text=auto
 
+# UI klasörü ve HTML dosyalarýný çýkarýr
+wwwroot/** linguist-vendored
+*.html linguist-detectable=false
+
+# ViewComponent ve diðer Razor görünümlerini (HTML) çýkarýr
+*.cshtml linguist-detectable=false
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
