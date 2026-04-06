@@ -9,6 +9,8 @@ wwwroot/** linguist-vendored
 
 *.css linguist-detectable=false
 
+*.js linguist-detectable=false
+
 # ViewComponent ve diðer Razor görünümlerini (HTML) çýkarýr
 *.cshtml linguist-detectable=false
 
