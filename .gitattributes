@@ -7,6 +7,8 @@
 wwwroot/** linguist-vendored
 *.html linguist-detectable=false
 
+*.css linguist-detectable=false
+
 # ViewComponent ve diðer Razor görünümlerini (HTML) çýkarýr
 *.cshtml linguist-detectable=false
 
