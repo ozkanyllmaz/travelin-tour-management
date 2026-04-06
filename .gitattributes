@@ -3,14 +3,8 @@
 ###############################################################################
 * text=auto
 
-# UI klasörü ve HTML dosyalarını çıkarır
-wwwroot/** linguist-vendored
-*.html linguist-detectable=false
-*.js linguist-detectable=false
-*.css linguist-detectable=false
-*.scss linguist-detectable=false
-*.less linguist-detectable=false
-*.ts linguist-detectable=false
+
+
 
 
 
